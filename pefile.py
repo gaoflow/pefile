@@ -1268,8 +1268,7 @@ class SectionStructure(Structure):
         # to fit in the range up to where the next section starts.
         if (
             self.next_section_virtual_address is not None
-            and self.next_section_virtual_address > self.VirtualAddress
-            and VirtualAddress_adj + size > self.next_section_virtual_address
+            and self.VirtualAddress < self.next_section_virtual_address < VirtualAddress_adj + size
         ):
             size = self.next_section_virtual_address - VirtualAddress_adj
 
@@ -4751,8 +4750,7 @@ class PE:
                     # is past the current's beginning, assume the overlap indicates a
                     # corrupt name.
                     if last_name_begin_end and (
-                        last_name_begin_end[0] < ustr_offset
-                        and last_name_begin_end[1] >= ustr_offset
+                        last_name_begin_end[0] < ustr_offset <= last_name_begin_end[1]
                     ):
                         # Remove the previous overlapping entry as it's likely to be
                         # already corrupt data.
@@ -5604,11 +5602,10 @@ class PE:
                 if symbol_address == 0:
                     continue
 
-                # Checking for forwarder again.
+                # Checking for forwarder again
                 if (
                     symbol_address is not None
-                    and symbol_address >= rva
-                    and symbol_address < rva + size
+                    and rva <= symbol_address < rva + size
                 ):
                     forwarder_str = self.get_string_at_rva(symbol_address)
                 else:
