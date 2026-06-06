@@ -983,12 +983,10 @@ class Structure:
 
     def all_zeroes(self):
         """Returns true if the unpacked data is all zeros."""
-
         return self.__all_zeroes__
 
     def sizeof(self):
         """Return size of the structure."""
-
         return self.__format_length__
 
     def __unpack__(self, data):
@@ -1282,36 +1280,30 @@ class SectionStructure(Structure):
 
     def get_entropy(self):
         """Calculate and return the entropy for the section."""
-
         return self.entropy_H(self.get_data())
 
     def get_hash_md5(self):
         """Get the MD5 hex-digest of the section's data."""
-
         if md5 is not None:
             return md5(self.get_data()).hexdigest()
 
     def get_hash_sha1(self):
         """Get the SHA-1 hex-digest of the section's data."""
-
         if sha1 is not None:
             return sha1(self.get_data()).hexdigest()
 
     def get_hash_sha256(self):
         """Get the SHA-256 hex-digest of the section's data."""
-
         if sha256 is not None:
             return sha256(self.get_data()).hexdigest()
 
     def get_hash_sha512(self):
         """Get the SHA-512 hex-digest of the section's data."""
-
         if sha512 is not None:
             return sha512(self.get_data()).hexdigest()
 
     def entropy_H(self, data):
         """Calculate the entropy of a chunk of data."""
-
         if not data:
             return 0.0
 
@@ -4270,7 +4262,6 @@ class PE:
 
     def parse_relocations_directory(self, rva, size):
         """"""
-
         return self.parse_image_base_relocation_list(rva, size)
 
     def parse_image_base_relocation_list(self, rva, size, fmt=None):
@@ -4915,7 +4906,6 @@ class PE:
 
     def parse_resource_data_entry(self, rva):
         """Parse a data entry from the resources directory."""
-
         try:
             # If the RVA is invalid all would blow up. Some EXEs seem to be
             # specially nasty and have an invalid RVA.
@@ -5674,7 +5664,6 @@ class PE:
 
     def parse_delay_import_directory(self, rva, size):
         """Walk and parse the delay import directory."""
-
         import_descs = []
         error_count = 0
         while True:
@@ -5879,7 +5868,6 @@ class PE:
 
     def parse_import_directory(self, rva, size, dllnames_only=False):
         """Walk and parse the import directory."""
-
         import_descs = []
         error_count = 0
         image_import_descriptor_size = Structure(
@@ -6393,7 +6381,6 @@ class PE:
 
     def get_rva_from_offset(self, offset):
         """Get the RVA corresponding to this file offset."""
-
         s = self.get_section_by_offset(offset)
         if not s:
             if self.sections:
